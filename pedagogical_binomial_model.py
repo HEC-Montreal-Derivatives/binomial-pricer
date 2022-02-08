@@ -18,7 +18,6 @@ def generate_state_key_names(state_index):
         return ['State 0']
     else:
         state_digits = int(log10(state_index))+1
-        state_range = range(1, state_index + 1)
         state_pattern_U = "{{0:0{0:d}d}}".format(state_digits)
         state_pattern_D = "{{1:0{0:d}d}}".format(state_digits)
         state_pattern = "State U{0:s}-D{1:s}".format(state_pattern_U, state_pattern_D)
