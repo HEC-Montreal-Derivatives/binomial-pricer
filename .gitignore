@@ -116,3 +116,6 @@ dmypy.json
 # VS Code
 .vscode
 *.code-workspace
+
+# Solution / dev files
+*_sol*
