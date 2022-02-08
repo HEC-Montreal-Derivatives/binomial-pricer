@@ -348,6 +348,20 @@ class binomial_tree:
                 if derivative_product.exercise_type == "American":
                     derivative_tree.trunk[time_index][state_index]["Exercise Derivative"] = early_exercise
 
+                # replicating portfolio: repl_delta and B
+                current_stock_price = derivative_tree.trunk[time_index][state_index]["Stock price"]
+                repl_delta = up_derivative - down_derivative
+                repl_delta = repl_delta / (current_stock_price * self.u_fctr - current_stock_price * self.d_fctr)
+                repl_delta = repl_delta * np.exp(-self.d_div_rate * self.h_time_step_length)
+
+                repl_b = self.u_fctr * down_derivative - self.d_fctr * up_derivative
+                repl_b = repl_b / (self.u_fctr - self.d_fctr)
+                repl_b = repl_b * self.single_period_discount_factor
+
+                if derivative_product.exercise_type == "European":
+                    derivative_tree.trunk[time_index][state_index]["Repl. Delta"] = repl_delta
+                    derivative_tree.trunk[time_index][state_index]["Repl. Bond"] = repl_b
+
                 # Update state selector
                 state_pick = state_pick + 1
 
